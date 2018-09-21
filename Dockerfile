@@ -31,6 +31,7 @@ ENV BUILDCHAIN=${BUILDCHAIN}
 # build dependencies
 ADD ./docker/build.sh /usr/local/bin/build.sh
 ADD ./docker/install.sh /usr/local/bin/install.sh
+ADD ./docker/compile.sh /usr/local/bin/compile.sh
 
 RUN /usr/local/bin/install.sh cryptoneat 
 RUN /usr/local/bin/install.sh diy 

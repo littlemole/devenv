@@ -2,7 +2,7 @@
 set -e
 
 echo "**********************************"
-echo "building $1 for $BACKEND with" 
+echo "compiling $1 for $BACKEND with" 
 echo "$CXX using $BUILDCHAIN"
 echo "**********************************"
 
@@ -29,7 +29,6 @@ function cmake_build {
         ctest
     fi
     
-    make install  
     cd ..
 }
 
@@ -43,8 +42,7 @@ then
         make clean
         make -e test
     fi
-    make clean
-    make -e install
+    make 
 else
     cmake_build "Debug"
     cmake_build "Release"
