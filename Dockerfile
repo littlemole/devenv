@@ -12,7 +12,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
   nghttp2 libnghttp2-dev libcurl4-openssl-dev \
   clang libc++-dev libc++abi-dev \
   libboost-dev libboost-system-dev zlib1g-dev \
-  libmysqlclient-dev sqlite3 libsqlite3-dev
+  libmysqlclient-dev sqlite3 libsqlite3-dev \
+  libexpat-dev
 
 ARG CXX=g++
 ENV CXX=${CXX}
