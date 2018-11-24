@@ -42,7 +42,7 @@ then
         make clean
         make -e test
     fi
-    make -e
+    make -e release
 else
     cmake_build "Debug"
     cmake_build "Release"
