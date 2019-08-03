@@ -14,7 +14,9 @@ else
 	FLAGS="-stdlib=libc++"
 fi
 
-cmake -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_CXX_FLAGS=$FLAGS . 
+mkdir -p build
+cd build
+cmake -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_CXX_FLAGS=$FLAGS  –DCMAKE_CXX_STANDARD=17 ..
 make
 make install
   
