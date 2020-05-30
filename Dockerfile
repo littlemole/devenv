@@ -26,6 +26,9 @@ RUN /usr/local/bin/gtest.sh
 ADD ./docker/jsoncpp.sh /usr/local/bin/jsoncpp.sh
 RUN /usr/local/bin/jsoncpp.sh
 
+ADD ./docker/mustache.sh /usr/local/bin/mustache.sh
+RUN /usr/local/bin/mustache.sh
+
 ARG BUILDCHAIN=make
 ENV BUILDCHAIN=${BUILDCHAIN}
 
@@ -36,4 +39,9 @@ ADD ./docker/compile.sh /usr/local/bin/compile.sh
 
 RUN /usr/local/bin/install.sh cryptoneat 
 RUN /usr/local/bin/install.sh diy 
+RUN /usr/local/bin/install.sh patex
+RUN /usr/local/bin/install.sh metacpp
+
+
+ 
 
