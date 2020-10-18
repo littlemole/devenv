@@ -7,7 +7,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
   git sudo joe wget netcat psmisc net-tools \
-  build-essential g++ cmake pkg-config valgrind \
+  build-essential g++ pkg-config valgrind \
   libgtest-dev  openssl libssl-dev libevent-dev uuid-dev \
   nghttp2 libnghttp2-dev libcurl4-openssl-dev \
   clang libc++-dev libc++abi-dev \
@@ -15,8 +15,16 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
   libmysqlclient-dev sqlite3 libsqlite3-dev \
   libexpat-dev
 
+
+# make cmake
+ADD ./docker/cmake.sh /usr/local/bin/cmake.sh
+RUN /usr/local/bin/cmake.sh
+
+
+# depend on compiler
 ARG CXX=g++
 ENV CXX=${CXX}
+
 
 # compile gtest with given compiler
 ADD ./docker/gtest.sh /usr/local/bin/gtest.sh
@@ -26,17 +34,23 @@ RUN /usr/local/bin/gtest.sh
 ADD ./docker/jsoncpp.sh /usr/local/bin/jsoncpp.sh
 RUN /usr/local/bin/jsoncpp.sh
 
-ADD ./docker/mustache.sh /usr/local/bin/mustache.sh
-RUN /usr/local/bin/mustache.sh
 
-ARG BUILDCHAIN=make
-ENV BUILDCHAIN=${BUILDCHAIN}
 
-# build dependencies
+# add little moles build & install helper scripts
 ADD ./docker/build.sh /usr/local/bin/build.sh
 ADD ./docker/install.sh /usr/local/bin/install.sh
 ADD ./docker/compile.sh /usr/local/bin/compile.sh
+ADD ./docker/mustache.sh /usr/local/bin/mustache.sh
 
+
+# depend on buildchain (optional as it should yield same results)
+ARG BUILDCHAIN=make
+ENV BUILDCHAIN=${BUILDCHAIN}
+
+# install mustache.hpp (header only)
+RUN /usr/local/bin/mustache.sh
+
+# install little moles basic dev packages, for given compiler & buildchain
 RUN /usr/local/bin/install.sh cryptoneat 
 RUN /usr/local/bin/install.sh diy 
 RUN /usr/local/bin/install.sh patex
