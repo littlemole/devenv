@@ -1,5 +1,5 @@
 # This is a comment
-FROM ubuntu:18.04
+FROM ubuntu:21.10
 MAINTAINER me <little.mole@oha7.org>
 
 # std debian dependencies
@@ -13,12 +13,12 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
   clang libc++-dev libc++abi-dev \
   libboost-dev libboost-system-dev zlib1g-dev \
   libmysqlclient-dev sqlite3 libsqlite3-dev \
-  libexpat-dev
+  libexpat-dev cmake
 
 
-# make cmake
-ADD ./docker/cmake.sh /usr/local/bin/cmake.sh
-RUN /usr/local/bin/cmake.sh
+# make specific cmake version
+#ADD ./docker/cmake.sh /usr/local/bin/cmake.sh
+#RUN /usr/local/bin/cmake.sh
 
 
 # depend on compiler
