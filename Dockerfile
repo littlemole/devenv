@@ -13,18 +13,20 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
   clang libc++-dev libc++abi-dev \
   libboost-dev libboost-system-dev zlib1g-dev \
   libmysqlclient-dev sqlite3 libsqlite3-dev \
-  libexpat-dev cmake nlohmann-json3-dev
+  libexpat-dev cmake nlohmann-json3-dev libkainjow-mustache-dev
 
 
 # make specific cmake version
-#ADD ./docker/cmake.sh /usr/local/bin/cmake.sh
-#RUN /usr/local/bin/cmake.sh
-
+# ADD ./docker/cmake.sh /usr/local/bin/cmake.sh
+# RUN /usr/local/bin/cmake.sh
 
 # depend on compiler
 ARG CXX=g++
 ENV CXX=${CXX}
 
+# depend on buildchain (optional as it should yield same results)
+ARG BUILDCHAIN=make
+ENV BUILDCHAIN=${BUILDCHAIN}
 
 # compile gtest with given compiler
 ADD ./docker/gtest.sh /usr/local/bin/gtest.sh
@@ -43,13 +45,6 @@ ADD ./docker/compile.sh /usr/local/bin/compile.sh
 ADD ./docker/mustache.sh /usr/local/bin/mustache.sh
 ADD ./docker/utest.sh /usr/local/bin/utest.sh
 
-
-# depend on buildchain (optional as it should yield same results)
-ARG BUILDCHAIN=make
-ENV BUILDCHAIN=${BUILDCHAIN}
-
-# install mustache.hpp (header only)
-RUN /usr/local/bin/mustache.sh
 RUN /usr/local/bin/utest.sh
 
 # install little moles basic dev packages, for given compiler & buildchain
