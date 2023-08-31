@@ -1,5 +1,5 @@
 # This is a comment
-FROM ubuntu:21.10
+FROM ubuntu:22.04
 MAINTAINER me <little.mole@oha7.org>
 
 # std debian dependencies
@@ -13,7 +13,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
   clang libc++-dev libc++abi-dev \
   libboost-dev libboost-system-dev zlib1g-dev \
   libmysqlclient-dev sqlite3 libsqlite3-dev \
-  libexpat-dev cmake
+  libexpat-dev cmake nlohmann-json3-dev
 
 
 # make specific cmake version
@@ -41,6 +41,7 @@ ADD ./docker/build.sh /usr/local/bin/build.sh
 ADD ./docker/install.sh /usr/local/bin/install.sh
 ADD ./docker/compile.sh /usr/local/bin/compile.sh
 ADD ./docker/mustache.sh /usr/local/bin/mustache.sh
+ADD ./docker/utest.sh /usr/local/bin/utest.sh
 
 
 # depend on buildchain (optional as it should yield same results)
@@ -49,6 +50,7 @@ ENV BUILDCHAIN=${BUILDCHAIN}
 
 # install mustache.hpp (header only)
 RUN /usr/local/bin/mustache.sh
+RUN /usr/local/bin/utest.sh
 
 # install little moles basic dev packages, for given compiler & buildchain
 RUN /usr/local/bin/install.sh cryptoneat 
